@@ -1,0 +1,237 @@
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+} */
+
+:root {
+  --default-font-size: 16px;
+  --default-border: 1px solid black;
+  --default-border-radius: 20px;
+  --default-elements-border-radius: 8px;
+  --default-margin: 0 auto;
+  --background-color: rgb(222, 222, 222);
+  --white-color: white;
+  color-scheme: white;
+}
+
+body {
+  background-color: var(--background-color);
+  margin: var(--default-margin);
+}
+
+h1 {
+  display: flex;
+  margin: var(--default-margin);
+  justify-content: center;
+  font-size: 96px;
+}
+
+main {
+  background-color: var(--white-color);
+  border-radius: var(--default-border-radius);
+  width: 40%;
+  height: 60%;
+  margin: var(--default-margin);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  margin: var(--default-margin);
+  width: 100%;
+}
+
+input[id=todo_input_id] {
+  border: var(--default-border);
+  height: 100%;
+  width: 90%;
+  margin: 8px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+div.todo {
+  flex-direction: column;
+}
+
+button {
+  border: none;
+  background-color: var(--white-color);
+  cursor: pointer;
+  font-size: var(--default-font-size);
+}
+
+input[type=checkbox] {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border: var(--default-border);
+  background: var(--white-color);
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+ul {
+  overflow-y: auto;
+  max-height: 70vh;
+  padding: 0 20px;
+}
+
+li {
+  margin: var(--default-margin);
+  list-style-type: none;
+  width: 100%;
+}
+
+.active-li {
+  color: black;
+  text-decoration: none;
+}
+
+.complete-li {
+  text-decoration: line-through;
+  color: rgb(195, 194, 194);
+}
+
+
+.list-div {
+  border-radius: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+li:hover {
+  background-color: var(--background-color);
+  border-radius: var(--default-elements-border-radius);
+}
+
+li span {
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--default-font-size);
+  max-height: 100px;
+  word-wrap: break-word;
+  overflow-x: auto;
+  width: 100%;
+}
+
+li button {
+  float: inline-end;
+  display: none;
+  align-items: center;
+  border-radius: var(--default-elements-border-radius);
+  height: 100%;
+}
+
+li:hover button {
+  background-color: var(--background-color);
+  border-radius: var(--default-elements-border-radius);
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.hidden-div {
+  min-width: 73.1px;
+}
+
+li:hover .hidden-div {
+  display: none;
+}
+
+.down-panel {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--default-font-size);
+}
+
+.down-panel span {
+  text-align: center;
+}
+
+@media (max-width: 1050px) {
+  .down-panel {
+    flex-direction: column;
+  }
+
+  .down-panel-button__row {
+    flex-direction: column;
+  }
+}
+
+.down-panel-button__row {
+  display: flex;
+  justify-content: center;
+  border-radius: var(--default-border-radius)
+}
+
+.modal-background {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: none;
+  background-color: #6969693d;
+  top: 0;
+  left: 0;
+}
+
+.modal-window {
+  padding: 20px;
+  margin: auto;
+  border: var(--default-border);
+  background-color: var(--white-color);
+  width: 30%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-window textarea {
+  border-radius: var(--default-border-radius);
+  width: 100%;
+  padding: 20px;
+}
