@@ -2,10 +2,10 @@ import TodoList from './TodoList.jsx'
 import TodoForm from './TodoForm.jsx'
 
 
-const Todo = ({ stackTodos, changeStack, filteredTodos, setCurrentTextTodo, handleAddTodo, newTodo, setNewTodo }) => (
+const Todo = ({ filteredTodos, handleAddTodo }) => (
   <div className='todo'>
-    <TodoForm handleAddTodo={handleAddTodo} newTodo={newTodo} setNewTodo={setNewTodo} />
-    <TodoList stackTodos={stackTodos} changeStack={changeStack} filteredTodos={filteredTodos} setCurrentTextTodo={setCurrentTextTodo} />
+    <TodoForm handleAddTodo={handleAddTodo} />
+    <TodoList filteredTodos={filteredTodos} />
   </div>
 );
 
