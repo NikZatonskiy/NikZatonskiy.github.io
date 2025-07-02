@@ -2,11 +2,11 @@ import TodoList from './TodoList.jsx'
 import TodoForm from './TodoForm.jsx'
 
 
-export default function Todo({ stackTodos, changeStack, filter, setCurrentTextTodo }) {
-  return (
-    <div className='todo'>
-      <TodoForm stackTodos={stackTodos} changeStack={changeStack} />
-      <TodoList stackTodos={stackTodos} changeStack={changeStack} filter={filter} setCurrentTextTodo={setCurrentTextTodo} />
-    </div>
-  );
-}
+const Todo = ({ stackTodos, changeStack, filteredTodos, setCurrentTextTodo, handleAddTodo, newTodo, setNewTodo }) => (
+  <div className='todo'>
+    <TodoForm handleAddTodo={handleAddTodo} newTodo={newTodo} setNewTodo={setNewTodo} />
+    <TodoList stackTodos={stackTodos} changeStack={changeStack} filteredTodos={filteredTodos} setCurrentTextTodo={setCurrentTextTodo} />
+  </div>
+);
+
+export default Todo;
