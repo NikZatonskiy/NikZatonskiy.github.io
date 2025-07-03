@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
 import { updateTodoStatus, removeTodo, setCurrentTodo } from "../../redux/stackTodosSlice/stackTodosSlice";
-// import { setCurrentTodo } from "../../redux/newValueTodoSlice/newValueTodoSlice";
 
 
 export default function TodoElement({ elementTodo, id }) {
@@ -24,7 +23,7 @@ export default function TodoElement({ elementTodo, id }) {
       <span
         id={id}
         onDoubleClick={(event) => {
-          dispatch(setCurrentTodo({todoId: id, todoValue: event.target?.innerText}));
+          dispatch(setCurrentTodo({id: id, value: event.target?.innerText}));
         }}
       >
         {elementTodo.value}

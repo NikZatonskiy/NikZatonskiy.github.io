@@ -36,6 +36,13 @@ export const stackTodosSlice = createSlice({
 
       state.todos = newStack.filter(item => !item.isComplete);
     },
+    getFilteredTodos: state => {
+      switch (state.flag) {
+        case "active": return state.todos.filter(item => !item.isComplete);
+        case "completed": return state.todos.filter(item => item.isComplete);
+        default: return state.todos;
+      }
+    },
     getCountActiveTodos: state => {
       const count = state.todos.filter(item => item.isComplete == false);
     
@@ -50,12 +57,7 @@ export const stackTodosSlice = createSlice({
     },
     appendNewValueForCreate: (state, action) => {state.inputNewTodo = action.payload},
     appendNewValueForUpdate: (state, action) => {state.currentTodo.value = action.payload},
-    setCurrentTodo: (state, action) => {
-      const { todoId, todoValue } = action.payload;
-
-      state.currentTodo.id = todoId;
-      state.currentTodo.value = todoValue;
-    },
+    setCurrentTodo: (state, action) => { state.currentTodo = action.payload },
     clearCurrentTodo: state => {
       state.currentTodo.id = null;
       state.currentTodo.value = '';
@@ -69,8 +71,8 @@ export const {
   updateTodoStatus,
   removeTodo,
   removeCompletedTodos,
+  getFilteredTodos,
   getCountActiveTodos,
-  //
   changeFlag,
   appendNewValueForCreate,
   appendNewValueForUpdate,

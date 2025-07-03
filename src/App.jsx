@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Modal from './components/modal/Modal.jsx'
 import Todo from './components/todo/Todo.jsx'
 import DownPanel from './components/down_panel/DownPanel.jsx'
-import { addTodo, appendNewValueForCreate } from './redux/stackTodosSlice/stackTodosSlice.jsx'
+import { addTodo, appendNewValueForCreate, getFilteredTodos } from './redux/stackTodosSlice/stackTodosSlice.jsx'
 import './App.css'
 
 
@@ -12,13 +12,15 @@ function App() {
   const stackTodos = useSelector(state => state.stackTodos);
   const dispatch = useDispatch();
 
-  const filteredTodos = useMemo(() => {
-    switch (stackTodos.flag) {
-      case "active": return stackTodos.todos.filter(item => !item.isComplete);
-      case "completed": return stackTodos.todos.filter(item => item.isComplete);
-      default: return stackTodos.todos;
-    }
-  }, [stackTodos.todos, stackTodos.flag]);
+  // const filteredTodos = useMemo(() => {
+  //   switch (stackTodos.flag) {
+  //     case "active": return stackTodos.todos.filter(item => !item.isComplete);
+  //     case "completed": return stackTodos.todos.filter(item => item.isComplete);
+  //     default: return stackTodos.todos;
+  //   }
+  // }, [stackTodos.todos, stackTodos.flag]);
+  
+  const filteredTodos = useMemo(() => dispatch(getFilteredTodos()), [stackTodos.todos, stackTodos.flag])
 
   const handleAddTodo = (event) => {
     event.preventDefault();

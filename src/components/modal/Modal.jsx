@@ -1,6 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-// import { appendNewValue } from "../../redux/newValueTodoSlice/newValueTodoSlice";
-// import { clearCurrentTodo } from '../../redux/newValueTodoSlice/newValueTodoSlice.jsx';
 import { updateTodo, appendNewValueForUpdate, clearCurrentTodo } from '../../redux/stackTodosSlice/stackTodosSlice.jsx'
 
 export default function Modal() {
