@@ -1,32 +1,37 @@
 import { useDispatch } from "react-redux";
-import { updateTodoStatus, removeTodo } from "../../redux/stackTodosSlice/stackTodosSlice";
-import { setCurrentTodo } from "../../redux/newValueTodoSlice/newValueTodoSlice";
+import { updateTodoStatus, removeTodo, setCurrentTodo } from "../../redux/stackTodosSlice/stackTodosSlice";
+// import { setCurrentTodo } from "../../redux/newValueTodoSlice/newValueTodoSlice";
 
 
-export default function TodoElement({ elementTodo, index }) {
+export default function TodoElement({ elementTodo, id }) {
   const dispatch = useDispatch();
 
   return (<li
-    id={index}
+    id={id}
     is-complete={elementTodo.isComplete.toString()}
     className={elementTodo.isComplete ? "complete-li" : "active-li"}
   >
     <div className='list-div'>
-      <input
-        type='checkbox'
-        id={index}
-        checked={elementTodo.isComplete}
-        onChange={() => dispatch(updateTodoStatus(index))}
-      ></input>
+      <label className='custom-container'>
+        <input
+          type='checkbox'
+          id={id}
+          checked={elementTodo.isComplete}
+          onChange={() => dispatch(updateTodoStatus(id))}
+        />
+        <span className='custom-checkmark'></span>
+      </label>
       <span
-        id={index}
-        onDoubleClick={(event) => dispatch(setCurrentTodo({todoId: index, todoValue: event.target?.innerText}))}
+        id={id}
+        onDoubleClick={(event) => {
+          dispatch(setCurrentTodo({todoId: id, todoValue: event.target?.innerText}));
+        }}
       >
         {elementTodo.value}
       </span>
       <button
-        id={index}
-        onClick={() => dispatch(removeTodo(index))}
+        id={id}
+        onClick={() => dispatch(removeTodo(id))}
       >
         Удалить
       </button>

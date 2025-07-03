@@ -4,7 +4,14 @@ import { createSlice } from '@reduxjs/toolkit'
 export const stackTodosSlice = createSlice({
   name: 'stackTodos',
   initialState: {
-    todos: localStorage.getItem("stack") ? JSON.parse(localStorage.getItem("stack")) : []
+    todos: localStorage.getItem("stack") ? JSON.parse(localStorage.getItem("stack")) : [],
+    inputNewTodo: '',
+    currentTodo: {
+      id: null,
+      value: ''
+    },
+    flag: 'all',
+    supportedFlags: ['all', 'active', 'completed']
   },
   reducers: {
     addTodo: (state, action) => { state.todos.push({id: Date.now(), value: action.payload, isComplete: false}) },
@@ -24,9 +31,51 @@ export const stackTodosSlice = createSlice({
 
       state.todos.splice(elementTodo, 1);
     },
+    removeCompletedTodos: state => {
+      const newStack = [...state.todos];
+
+      state.todos = newStack.filter(item => !item.isComplete);
+    },
+    getCountActiveTodos: state => {
+      const count = state.todos.filter(item => item.isComplete == false);
+    
+      return count.length;
+    },
+    changeFlag: (state, action) => {
+      if (!state.supportedFlags.includes(action.payload)) {
+        return;
+      };
+      
+      state.flag = action.payload;
+    },
+    appendNewValueForCreate: (state, action) => {state.inputNewTodo = action.payload},
+    appendNewValueForUpdate: (state, action) => {state.currentTodo.value = action.payload},
+    setCurrentTodo: (state, action) => {
+      const { todoId, todoValue } = action.payload;
+
+      state.currentTodo.id = todoId;
+      state.currentTodo.value = todoValue;
+    },
+    clearCurrentTodo: state => {
+      state.currentTodo.id = null;
+      state.currentTodo.value = '';
+    }
   }
 })
 
-export const { addTodo, updateTodo, updateTodoStatus, removeTodo } = stackTodosSlice.actions;
+export const {
+  addTodo,
+  updateTodo,
+  updateTodoStatus,
+  removeTodo,
+  removeCompletedTodos,
+  getCountActiveTodos,
+  //
+  changeFlag,
+  appendNewValueForCreate,
+  appendNewValueForUpdate,
+  setCurrentTodo,
+  clearCurrentTodo
+} = stackTodosSlice.actions;
 
 export default stackTodosSlice.reducer;

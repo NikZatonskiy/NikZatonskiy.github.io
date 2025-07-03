@@ -1,10 +1,13 @@
-import { useDispatch } from 'react-redux'
-import { changeFlag } from '../../redux/filterTodosSlice/filterTodosSlice.jsx'
+import { useDispatch, useSelector } from 'react-redux'
+// import { changeFlag } from '../../redux/filterTodosSlice/filterTodosSlice.jsx'
+import { removeCompletedTodos, changeFlag } from '../../redux/stackTodosSlice/stackTodosSlice.jsx'
 
 
-export default function DownPanel({ stackTodos, changeStack }) {
+export default function DownPanel() {
+  const filterFlag = useSelector(state => state.stackTodos.flag);
+  const stackTodos = useSelector(state => state.stackTodos.todos);
   const dispatch = useDispatch();
-
+  
   const countActiveElements = stackTodos.filter(item => item.isComplete == false);
   const textSpan = `${countActiveElements.length} items left`
 
@@ -12,16 +15,23 @@ export default function DownPanel({ stackTodos, changeStack }) {
     <div className='down-panel'>
       <span name='countActive'>{textSpan}</span>
       <div className='down-panel-button__row'>
-        <button className='down-panel-button' onClick={() => dispatch(changeFlag("all"))}>all</button>
-        <button className='down-panel-button' onClick={() => dispatch(changeFlag("active"))}>active</button>
-        <button className='down-panel-button' onClick={() => dispatch(changeFlag("completed"))}>completed</button>
+        <button
+          className={`${filterFlag === 'all' ? 'current-' : ''}down-panel-button`}
+          onClick={() => dispatch(changeFlag("all"))}
+        >All</button>
+        <button
+          className={`${filterFlag === 'active' ? 'current-' : ''}down-panel-button`}
+          onClick={() => dispatch(changeFlag("active"))}
+        >Active</button>
+        <button
+          className={`${filterFlag === 'completed' ? 'current-' : ''}down-panel-button`}
+          onClick={() => dispatch(changeFlag("completed"))}
+        >Completed</button>
       </div>
       <button
-        id='todo_remove_completed_id'
-        onClick={() => changeStack(stackTodos.filter(item => !item.isComplete))}
-      >
-        Clear completed
-      </button>
+        className='clear-completed'
+        onClick={() => dispatch(removeCompletedTodos())}
+      >Clear completed</button>
     </div>
   );
 }
