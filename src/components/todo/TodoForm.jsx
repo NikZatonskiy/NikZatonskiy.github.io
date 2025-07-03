@@ -12,7 +12,6 @@ export default function TodoForm({ handleAddTodo }) {
       className='todo_form'
       onSubmit={(handleAddTodo)}
     >
-      <img src='/src/assets/down-arrow.jpg' alt='down arrow' />
       <input
         type='text'
         className='todo_input'
