@@ -6,15 +6,15 @@ export const stackTodosSlice = createSlice({
   initialState: {
     todos: localStorage.getItem("stack") ? JSON.parse(localStorage.getItem("stack")) : [],
     inputNewTodo: '',
-    currentTodo: {
-      id: null,
-      value: ''
-    },
+    currentTodo: {id: null, value: ''},
     flag: 'all',
     supportedFlags: ['all', 'active', 'completed']
   },
   reducers: {
-    addTodo: (state, action) => { state.todos.push({id: Date.now(), value: action.payload, isComplete: false}) },
+    addTodo: (state, action) => {
+      state.todos.push({id: Date.now(), value: action.payload, isComplete: false});
+      state.inputNewTodo = '';
+    },
     updateTodo: (state, action) => {
       const { todoId, newTodoValue } = action.payload;
       const todo = state.todos.find(item => item.id === todoId);
@@ -55,13 +55,10 @@ export const stackTodosSlice = createSlice({
       
       state.flag = action.payload;
     },
-    appendNewValueForCreate: (state, action) => {state.inputNewTodo = action.payload},
-    appendNewValueForUpdate: (state, action) => {state.currentTodo.value = action.payload},
+    appendNewValueForCreate: (state, action) => { state.inputNewTodo = action.payload },
+    appendNewValueForUpdate: (state, action) => { state.currentTodo.value = action.payload },
     setCurrentTodo: (state, action) => { state.currentTodo = action.payload },
-    clearCurrentTodo: state => {
-      state.currentTodo.id = null;
-      state.currentTodo.value = '';
-    }
+    clearCurrentTodo: state => { state.currentTodo = {id: null, value: '' } }
   }
 })
 
@@ -77,7 +74,7 @@ export const {
   appendNewValueForCreate,
   appendNewValueForUpdate,
   setCurrentTodo,
-  clearCurrentTodo
+  clearCurrentTodo,
 } = stackTodosSlice.actions;
 
 export default stackTodosSlice.reducer;
