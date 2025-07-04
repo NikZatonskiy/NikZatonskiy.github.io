@@ -1,23 +1,21 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-
-import Modal from './components/modal/Modal.jsx'
 import Todo from './components/todo/Todo.jsx'
-import DownPanel from './components/DownPanel/DownPanel.jsx'
-import { getFilteredTodos } from './redux/stackTodosSlice/stackTodosSlice.jsx'
+import { getFilteredTodos } from './store/slice/stackTodosSlice.jsx'
 import './App.css'
+import DownPanel from './components/DownPanel/DownPanel.jsx'
+import Modal from './components/modal/modal.jsx'
 
+function App() {  
+  const stackTodos = useSelector(state => state.stackTodos);
+  const dispatch = useDispatch();
 
-function App() {
   useEffect(() => {
     if (!localStorage.getItem("stack")) {
       localStorage.setItem("stack", JSON.stringify([]));
     }
   }, [])
   
-  const stackTodos = useSelector(state => state.stackTodos);
-  const dispatch = useDispatch();
-
   useEffect(() => {
     localStorage.setItem("stack", JSON.stringify(stackTodos.todos));
   }, [stackTodos.todos]);

@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-
 export const stackTodosSlice = createSlice({
   name: 'stackTodos',
   initialState: {
     todos: localStorage.getItem("stack") ? JSON.parse(localStorage.getItem("stack")) : [],
     filteredTodos: [],
     inputNewTodo: '',
-    currentTodo: {id: null, value: ''},
+    selectedTodo: {id: null, value: ''},
     flag: 'all',
     supportedFlags: ['all', 'active', 'completed']
   },
@@ -32,13 +31,12 @@ export const stackTodosSlice = createSlice({
 
       state.todos.splice(elementTodo, 1);
     },
-    removeCompletedTodos: state => {
+    removeAllCompletedTodos: state => {
       const newStack = [...state.todos];
 
       state.todos = newStack.filter(item => !item.isComplete);
     },
     getFilteredTodos: state => {
-      console.log(state.todos);
       switch (state.flag) {
         case "active": {
           state.filteredTodos = [...state.todos].filter(item => !item.isComplete);
@@ -51,12 +49,7 @@ export const stackTodosSlice = createSlice({
         default: state.filteredTodos = [...state.todos];
       }
     },
-    getCountActiveTodos: state => {
-      const count = state.todos.filter(item => item.isComplete == false);
-    
-      return count.length;
-    },
-    changeFlag: (state, action) => {
+    setFilterFlag: (state, action) => {
       if (!state.supportedFlags.includes(action.payload)) {
         return;
       };
@@ -64,9 +57,9 @@ export const stackTodosSlice = createSlice({
       state.flag = action.payload;
     },
     appendNewValueForCreate: (state, action) => { state.inputNewTodo = action.payload },
-    appendNewValueForUpdate: (state, action) => { state.currentTodo.value = action.payload },
-    setCurrentTodo: (state, action) => { state.currentTodo = action.payload },
-    clearCurrentTodo: state => { state.currentTodo = {id: null, value: '' } }
+    appendNewValueForUpdate: (state, action) => { state.selectedTodo.value = action.payload },
+    setSelectedTodo: (state, action) => { state.selectedTodo = action.payload },
+    clearSelectedTodo: state => { state.selectedTodo = {id: null, value: '' } }
   }
 })
 
@@ -75,14 +68,14 @@ export const {
   updateTodo,
   updateTodoStatus,
   removeTodo,
-  removeCompletedTodos,
+  removeAllCompletedTodos,
   getFilteredTodos,
   getCountActiveTodos,
-  changeFlag,
+  setFilterFlag,
   appendNewValueForCreate,
   appendNewValueForUpdate,
-  setCurrentTodo,
-  clearCurrentTodo,
+  setSelectedTodo,
+  clearSelectedTodo,
 } = stackTodosSlice.actions;
 
 export default stackTodosSlice.reducer;

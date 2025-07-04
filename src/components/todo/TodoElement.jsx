@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
-import { updateTodoStatus, removeTodo, setCurrentTodo } from "../../redux/stackTodosSlice/stackTodosSlice";
-
+import { updateTodoStatus, removeTodo, setSelectedTodo } from "../../store/slice/stackTodosSlice";
 
 export default function TodoElement({ elementTodo }) {
   const dispatch = useDispatch();
@@ -16,11 +15,11 @@ export default function TodoElement({ elementTodo }) {
           checked={elementTodo.isComplete}
           onChange={() => dispatch(updateTodoStatus(elementTodo.id))}
         />
-        <span className='custom-checkmark'></span>
+        <span className='custom-checkmark' />
       </label>
-      <span
+      <span 
         onDoubleClick={(event) => {
-          dispatch(setCurrentTodo({id: elementTodo.id, value: event.target?.innerText}));
+          dispatch(setSelectedTodo({id: elementTodo.id, value: event.target?.innerText}));
         }}
       >
         {elementTodo.value}

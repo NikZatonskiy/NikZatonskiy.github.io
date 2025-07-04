@@ -137,6 +137,10 @@ li span {
   padding: 15px 0;
 }
 
+li label {
+  min-width: 30px;
+}
+
 li button {
   right: 20px;
   display: none;
@@ -202,6 +206,9 @@ li:hover .hidden-div {
 
   .down-panel-button__row {
     flex-direction: column;
+  }
+  main {
+    width: 100%;
   }
 }
 

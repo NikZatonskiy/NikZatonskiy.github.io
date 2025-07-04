@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { appendNewValueForCreate, addTodo } from "../../redux/stackTodosSlice/stackTodosSlice";
-
+import { appendNewValueForCreate, addTodo } from "../../store/slice/stackTodosSlice";
 
 export default function TodoForm() {
   const inputNewTodo = useSelector(state => state.stackTodos.inputNewTodo);
@@ -12,11 +11,7 @@ export default function TodoForm() {
       className='todo_form'
       onSubmit={(event) => {
         event.preventDefault();
-    
-        if (!inputNewTodo.trim()) {
-          return;
-        };
-        
+        if (!inputNewTodo.trim()) return;
         dispatch(addTodo(inputNewTodo));
       }}
     >
@@ -25,7 +20,7 @@ export default function TodoForm() {
         className='todo_input'
         placeholder='What needs to be done?'
         value={inputNewTodo}
-        onChange={(event) => dispatch(appendNewValueForCreate(event.target.value))}
+        onChange={({ target }) => dispatch(appendNewValueForCreate(target.value))}
       />
     </form>
   )

@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import stackTodosReducer from './stackTodosSlice/stackTodosSlice'
-
+import stackTodosReducer from './slice/stackTodosSlice'
 
 export default configureStore({
   reducer: {
