@@ -19,12 +19,12 @@ export default function Modal() {
   return (
     <div
       className='modal-background'
-      style={{display: currentTodo.id != null ? "flex" : "none"}}
+      style={{display: currentTodo?.id != null ? "flex" : "none"}}
       onClick={closeModal}
     >
       <div className='modal-window'>
         <textarea
-          value={currentTodo.value}
+          value={currentTodo?.value}
           onChange={(event) => dispatch(appendNewValueForUpdate(event.target.value))}
           onKeyDown={(event) => {
             if (event.key === "Enter" && currentTodo.value.trim()) {

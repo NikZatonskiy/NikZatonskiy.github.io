@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
-import { appendNewValueForCreate } from "../../redux/stackTodosSlice/stackTodosSlice";
+import { appendNewValueForCreate, addTodo } from "../../redux/stackTodosSlice/stackTodosSlice";
 
 
-export default function TodoForm({ handleAddTodo }) {
+export default function TodoForm() {
   const inputNewTodo = useSelector(state => state.stackTodos.inputNewTodo);
   const dispatch = useDispatch();
 
@@ -10,7 +10,15 @@ export default function TodoForm({ handleAddTodo }) {
     <form
       autoComplete='off'
       className='todo_form'
-      onSubmit={(handleAddTodo)}
+      onSubmit={(event) => {
+        event.preventDefault();
+    
+        if (!inputNewTodo.trim()) {
+          return;
+        };
+        
+        dispatch(addTodo(inputNewTodo));
+      }}
     >
       <input
         type='text'

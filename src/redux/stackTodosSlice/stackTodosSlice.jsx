@@ -5,6 +5,7 @@ export const stackTodosSlice = createSlice({
   name: 'stackTodos',
   initialState: {
     todos: localStorage.getItem("stack") ? JSON.parse(localStorage.getItem("stack")) : [],
+    filteredTodos: [],
     inputNewTodo: '',
     currentTodo: {id: null, value: ''},
     flag: 'all',
@@ -37,10 +38,17 @@ export const stackTodosSlice = createSlice({
       state.todos = newStack.filter(item => !item.isComplete);
     },
     getFilteredTodos: state => {
+      console.log(state.todos);
       switch (state.flag) {
-        case "active": return state.todos.filter(item => !item.isComplete);
-        case "completed": return state.todos.filter(item => item.isComplete);
-        default: return state.todos;
+        case "active": {
+          state.filteredTodos = [...state.todos].filter(item => !item.isComplete);
+          break;
+        };
+        case "completed": {
+          state.filteredTodos = [...state.todos].filter(item => item.isComplete);
+          break;
+        };
+        default: state.filteredTodos = [...state.todos];
       }
     },
     getCountActiveTodos: state => {
