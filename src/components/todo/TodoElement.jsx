@@ -1,5 +1,9 @@
 import { useDispatch } from "react-redux";
-import { setSelectedTodo } from "../../store/slice/stackTodosSlice";
+import {
+  removeTodo,
+  setSelectedTodo,
+  updateTodoStatus,
+} from "../../store/slice/stackTodosSlice";
 import { Box, Button, Checkbox, ListItem, InputLabel } from "@mui/material";
 import {
   sxCustomCheckbox,
@@ -10,7 +14,6 @@ import {
   sxTodoInputLabel,
   sxTodoListItem,
 } from "./style";
-import axios from "axios";
 
 export default function TodoElement({ elementTodo }) {
   const dispatch = useDispatch();
@@ -26,13 +29,7 @@ export default function TodoElement({ elementTodo }) {
           <Checkbox
             checked={elementTodo.completed}
             onChange={() => {
-              axios.patch(
-                `https://jsonplaceholder.typicode.com/todos/${elementTodo.id}`,
-                {
-                  completed: !elementTodo.isComplete,
-                  // userId: 1,
-                }
-              );
+              dispatch(updateTodoStatus(elementTodo));
             }}
             sx={sxCustomCheckbox}
           />
@@ -54,11 +51,7 @@ export default function TodoElement({ elementTodo }) {
         </Box>
         <Button
           className="delete-button"
-          onClick={() =>
-            axios.delete(
-              `https://jsonplaceholder.typicode.com/todos/${elementTodo.id}`
-            )
-          }
+          onClick={() => dispatch(removeTodo(elementTodo.id))}
           sx={sxDeleteButton}
         >
           Удалить

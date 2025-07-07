@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { appendNewValueForCreate } from "../../store/slice/stackTodosSlice";
+import {
+  addTodo,
+  appendNewValueForCreate,
+} from "../../store/slice/stackTodosSlice";
 import { sxTodoFormInput } from "./style";
 import { Box, TextField } from "@mui/material";
-import axios from "axios";
 
 export default function TodoForm() {
   const inputNewTodo = useSelector((state) => state.stackTodos.inputNewTodo);
@@ -11,10 +13,7 @@ export default function TodoForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!inputNewTodo.trim()) return;
-    axios.post("https://jsonplaceholder.typicode.com/todos", {
-      title: inputNewTodo.trim(),
-      userId: 1,
-    });
+    dispatch(addTodo(inputNewTodo));
   };
 
   return (

@@ -1,25 +1,18 @@
 import TodoElement from "./TodoElement.jsx";
 import { List } from "@mui/material";
 import { sxList } from "./style.js";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export default function TodoList() {
-  const [todosList, setTodosList] = useState(null);
+  const filteredTodos = useSelector((state) => state.stackTodos.filteredTodos);
 
-  useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/todos")
-      .then((response) => setTodosList(response.data));
-  }, []);
-
-  if (!todosList) {
+  if (!filteredTodos) {
     return <p>Пусто</p>;
   }
 
   return (
     <List sx={sxList}>
-      {todosList.map((value) => (
+      {filteredTodos.map((value) => (
         <TodoElement elementTodo={value} key={value.id} />
       ))}
     </List>

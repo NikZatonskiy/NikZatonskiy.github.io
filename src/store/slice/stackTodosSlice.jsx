@@ -1,69 +1,88 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const stackTodosSlice = createSlice({
-  name: 'stackTodos',
+  name: "stackTodos",
   initialState: {
-    todos: localStorage.getItem("stack") ? JSON.parse(localStorage.getItem("stack")) : [],
+    baseUrl: "https://jsonplaceholder.typicode.com/todos/",
+    todos: [],
     filteredTodos: [],
-    inputNewTodo: '',
-    selectedTodo: {id: null, value: ''},
-    flag: 'all',
-    supportedFlags: ['all', 'active', 'completed']
+    inputNewTodo: "",
+    selectedTodo: { id: null, title: "" },
+    flag: "all",
+    supportedFlags: ["all", "active", "completed"],
   },
   reducers: {
+    fillTodo: (state, action) => {
+      state.todos = action.payload;
+    },
     addTodo: (state, action) => {
-      state.todos.push({id: Date.now(), value: action.payload, isComplete: false});
-      state.inputNewTodo = '';
+      axios.post(state.baseUrl, {
+        title: action.payload.trim(),
+      });
+      state.inputNewTodo = "";
     },
     updateTodo: (state, action) => {
       const { todoId, newTodoValue } = action.payload;
-      const todo = state.todos.find(item => item.id === todoId);
+      const todo = state.todos.find((item) => item.id === todoId);
 
-      todo.value = newTodoValue;
+      todo.title = newTodoValue;
     },
     updateTodoStatus: (state, action) => {
-      const elementTodo = state.todos.find(item => item.id === action.payload);
-  
-      elementTodo.isComplete = !elementTodo.isComplete;
+      axios.patch(state.baseUrl + action.payload.id, {
+        completed: !action.payload.isComplete,
+      });
     },
     removeTodo: (state, action) => {
-      const elementTodo = state.todos.findIndex(item => item.id === action.payload);
-
-      state.todos.splice(elementTodo, 1);
+      axios.delete(state.baseUrl + action.payload);
     },
-    removeAllCompletedTodos: state => {
+    removeAllCompletedTodos: (state) => {
       const newStack = [...state.todos];
 
-      state.todos = newStack.filter(item => !item.isComplete);
+      state.todos = newStack.filter((item) => !item.isComplete);
     },
-    getFilteredTodos: state => {
+    getFilteredTodos: (state) => {
       switch (state.flag) {
         case "active": {
-          state.filteredTodos = [...state.todos].filter(item => !item.isComplete);
+          state.filteredTodos = [...state.todos].filter(
+            (item) => !item.completed
+          );
           break;
-        };
+        }
         case "completed": {
-          state.filteredTodos = [...state.todos].filter(item => item.isComplete);
+          state.filteredTodos = [...state.todos].filter(
+            (item) => item.completed
+          );
           break;
-        };
-        default: state.filteredTodos = [...state.todos];
+        }
+        default:
+          state.filteredTodos = [...state.todos];
       }
     },
     setFilterFlag: (state, action) => {
       if (!state.supportedFlags.includes(action.payload)) {
         return;
-      };
-      
+      }
+
       state.flag = action.payload;
     },
-    appendNewValueForCreate: (state, action) => { state.inputNewTodo = action.payload },
-    appendNewValueForUpdate: (state, action) => { state.selectedTodo.value = action.payload },
-    setSelectedTodo: (state, action) => { state.selectedTodo = action.payload },
-    clearSelectedTodo: state => { state.selectedTodo = {id: null, value: '' } }
-  }
-})
+    appendNewValueForCreate: (state, action) => {
+      state.inputNewTodo = action.payload;
+    },
+    appendNewValueForUpdate: (state, action) => {
+      state.selectedTodo.title = action.payload;
+    },
+    setSelectedTodo: (state, action) => {
+      state.selectedTodo = action.payload;
+    },
+    clearSelectedTodo: (state) => {
+      state.selectedTodo = { id: null, title: "" };
+    },
+  },
+});
 
 export const {
+  fillTodo,
   addTodo,
   updateTodo,
   updateTodoStatus,
