@@ -1,8 +1,14 @@
 import { useSelector } from 'react-redux'
 import TodoElement from './TodoElement.jsx'
+import { List } from '@mui/material';
+import { sxList } from './sxTodo.js';
 
 export default function TodoList() {
   const filteredTodos = useSelector(state => state.stackTodos.filteredTodos);
 
-  return <ul>{filteredTodos.map((value) => (<TodoElement elementTodo={value} key={value.id} />))}</ul>
+  return (
+    <List sx={sxList}>
+      {filteredTodos.map((value) => (<TodoElement elementTodo={value} key={value.id} />))}
+    </List>
+  )
 };

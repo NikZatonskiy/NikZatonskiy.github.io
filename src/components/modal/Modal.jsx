@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { updateTodo, appendNewValueForUpdate, clearSelectedTodo } from '../../store/slice/stackTodosSlice.jsx'
+import { Box } from '@mui/material';
+import { sxModalBackground, sxModalWindow, sxTextarea } from "./sxModal.js";
 
 export default function Modal() {
   const selectedTodo = useSelector(state => state.stackTodos.selectedTodo);
@@ -8,7 +10,7 @@ export default function Modal() {
   const closeModal = (event, isKeydown = false) => {
     event.stopPropagation();
 
-    if ((event.target?.type == "textarea" || event.target?.className == "modal-window") && !isKeydown) {
+    if ((event.target?.type == "textarea" || event.target?.className == 'modal-window MuiBox-root css-1kgfgt1') && !isKeydown) {
       return;
     };
 
@@ -16,13 +18,20 @@ export default function Modal() {
   };
 
   return (
-    <div
+    <Box
+      component='div'
       className='modal-background'
       style={{display: selectedTodo?.id != null ? "flex" : "none"}}
       onClick={closeModal}
+      sx={sxModalBackground}
     >
-      <div className='modal-window'>
-        <textarea
+      <Box
+        component='div'
+        className='modal-window'
+        sx={sxModalWindow}
+      >
+        <Box
+          component='textarea'
           value={selectedTodo?.value}
           onChange={(event) => dispatch(appendNewValueForUpdate(event.target.value))}
           onKeyDown={(event) => {
@@ -30,8 +39,10 @@ export default function Modal() {
               dispatch(updateTodo({todoId: selectedTodo.id, newTodoValue: selectedTodo.value}));
               closeModal(event, true);
             }
-          }} />
-      </div>
-    </div>
+          }}
+          sx={sxTextarea}
+          />
+      </Box>
+    </Box>
   );
 };

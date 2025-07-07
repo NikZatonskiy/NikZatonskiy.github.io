@@ -1,11 +1,15 @@
 import TodoList from './TodoList.jsx'
 import TodoForm from './TodoForm.jsx'
+import { Box } from '@mui/material'
 
 const Todo = () => (
-  <div className='todo'>
+  <Box
+    component='div'
+    className='todo'
+  >
     <TodoForm />
     <TodoList />
-  </div>
+  </Box>
 );
 
 export default Todo;

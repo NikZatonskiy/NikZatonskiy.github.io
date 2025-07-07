@@ -5,6 +5,8 @@ import { getFilteredTodos } from './store/slice/stackTodosSlice.jsx'
 import './App.css'
 import DownPanel from './components/DownPanel/DownPanel.jsx'
 import Modal from './components/modal/modal.jsx'
+import { Box } from '@mui/material';
+import { sxHeader, sxMain } from './sx.js'
 
 function App() {  
   const stackTodos = useSelector(state => state.stackTodos);
@@ -24,14 +26,20 @@ function App() {
 
   return (
     <>
-      <header>
+      <Box
+        component='header'
+        sx={sxHeader}
+      >
         <h1>todos</h1>
-      </header>
-      <main>
+      </Box>
+      <Box
+        component='main'
+        sx={sxMain}
+      >
         <Modal />
         <Todo />
         <DownPanel />
-      </main>
+      </Box>
       <div className='background-page-1' />
       <div className='background-page-2' />
     </>

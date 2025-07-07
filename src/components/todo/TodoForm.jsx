@@ -1,27 +1,35 @@
 import { useDispatch, useSelector } from "react-redux"
 import { appendNewValueForCreate, addTodo } from "../../store/slice/stackTodosSlice";
+import { sxTodoFormInput } from "./sxTodo";
+import { Box, TextField } from '@mui/material';
 
 export default function TodoForm() {
   const inputNewTodo = useSelector(state => state.stackTodos.inputNewTodo);
   const dispatch = useDispatch();
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!inputNewTodo.trim()) return;
+    dispatch(addTodo(inputNewTodo));
+  };
+
   return (
-    <form
+    <Box
+      component='form'
       autoComplete='off'
       className='todo_form'
-      onSubmit={(event) => {
-        event.preventDefault();
-        if (!inputNewTodo.trim()) return;
-        dispatch(addTodo(inputNewTodo));
-      }}
+      sx={{ width: '100%' }}
+      onSubmit={handleSubmit}
     >
-      <input
+      <TextField
         type='text'
         className='todo_input'
+        sx={sxTodoFormInput}
         placeholder='What needs to be done?'
         value={inputNewTodo}
-        onChange={({ target }) => dispatch(appendNewValueForCreate(target.value))}
+        variant="filled"
+        onChange={(event) => dispatch(appendNewValueForCreate(event.target.value))}
       />
-    </form>
+    </Box>
   )
 };
