@@ -1,40 +1,68 @@
 import { useDispatch } from "react-redux";
-import { updateTodoStatus, removeTodo, setSelectedTodo } from "../../store/slice/stackTodosSlice";
-import { Box, Button, Checkbox, ListItem, InputLabel } from '@mui/material';
-import { sxCustomCheckbox, sxCustomCheckmark, sxDeleteButton, sxListDiv, sxSpan, sxTodoInputLabel, sxTodoListItem } from "./style";
+import { setSelectedTodo } from "../../store/slice/stackTodosSlice";
+import { Box, Button, Checkbox, ListItem, InputLabel } from "@mui/material";
+import {
+  sxCustomCheckbox,
+  sxCustomCheckmark,
+  sxDeleteButton,
+  sxListDiv,
+  sxSpan,
+  sxTodoInputLabel,
+  sxTodoListItem,
+} from "./style";
+import axios from "axios";
 
 export default function TodoElement({ elementTodo }) {
   const dispatch = useDispatch();
 
   return (
     <ListItem
-      is-complete={elementTodo.isComplete.toString()}
-      className={elementTodo.isComplete ? "complete-li" : "active-li"}
+      is-complete={elementTodo.completed.toString()}
+      className={elementTodo.completed ? "complete-li" : "active-li"}
       sx={sxTodoListItem}
     >
-      <Box
-        component='div'
-        className='list-div'
-        sx={sxListDiv}
-      >
+      <Box component="div" className="list-div" sx={sxListDiv}>
         <InputLabel sx={sxTodoInputLabel}>
-          <Checkbox 
-            checked={elementTodo.isComplete} 
-            onChange={() => dispatch(updateTodoStatus(elementTodo.id))}
+          <Checkbox
+            checked={elementTodo.completed}
+            onChange={() => {
+              axios.patch(
+                `https://jsonplaceholder.typicode.com/todos/${elementTodo.id}`,
+                {
+                  completed: !elementTodo.isComplete,
+                  // userId: 1,
+                }
+              );
+            }}
             sx={sxCustomCheckbox}
           />
-          <Box className="custom-checkmark" sx={sxCustomCheckmark}/>
+          <Box className="custom-checkmark" sx={sxCustomCheckmark} />
         </InputLabel>
         <Box
-          component='span'
-          onDoubleClick={(event) => dispatch(setSelectedTodo({id: elementTodo.id, value: event.target?.innerText}))}
+          component="span"
+          onDoubleClick={(event) =>
+            dispatch(
+              setSelectedTodo({
+                id: elementTodo.id,
+                value: event.target?.innerText,
+              })
+            )
+          }
           sx={sxSpan}
-        >{elementTodo.value}</Box>
+        >
+          {elementTodo.title}
+        </Box>
         <Button
           className="delete-button"
-          onClick={() => dispatch(removeTodo(elementTodo.id))}
+          onClick={() =>
+            axios.delete(
+              `https://jsonplaceholder.typicode.com/todos/${elementTodo.id}`
+            )
+          }
           sx={sxDeleteButton}
-        >Удалить</Button>
+        >
+          Удалить
+        </Button>
       </Box>
     </ListItem>
   );

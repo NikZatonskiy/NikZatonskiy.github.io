@@ -1,35 +1,41 @@
-import { useDispatch, useSelector } from "react-redux"
-import { appendNewValueForCreate, addTodo } from "../../store/slice/stackTodosSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { appendNewValueForCreate } from "../../store/slice/stackTodosSlice";
 import { sxTodoFormInput } from "./style";
-import { Box, TextField } from '@mui/material';
+import { Box, TextField } from "@mui/material";
+import axios from "axios";
 
 export default function TodoForm() {
-  const inputNewTodo = useSelector(state => state.stackTodos.inputNewTodo);
+  const inputNewTodo = useSelector((state) => state.stackTodos.inputNewTodo);
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!inputNewTodo.trim()) return;
-    dispatch(addTodo(inputNewTodo));
+    axios.post("https://jsonplaceholder.typicode.com/todos", {
+      title: inputNewTodo.trim(),
+      userId: 1,
+    });
   };
 
   return (
     <Box
-      component='form'
-      autoComplete='off'
-      className='todo_form'
-      sx={{ width: '100%' }}
+      component="form"
+      autoComplete="off"
+      className="todo_form"
+      sx={{ width: "100%" }}
       onSubmit={handleSubmit}
     >
       <TextField
-        type='text'
-        className='todo_input'
+        type="text"
+        className="todo_input"
         sx={sxTodoFormInput}
-        placeholder='What needs to be done?'
+        placeholder="What needs to be done?"
         value={inputNewTodo}
         variant="filled"
-        onChange={(event) => dispatch(appendNewValueForCreate(event.target.value))}
+        onChange={(event) =>
+          dispatch(appendNewValueForCreate(event.target.value))
+        }
       />
     </Box>
-  )
-};
+  );
+}
