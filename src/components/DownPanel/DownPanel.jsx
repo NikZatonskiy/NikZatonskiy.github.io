@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { removeAllCompletedTodos, setFilterFlag } from '../../store/slice/stackTodosSlice.jsx'
 import { Box, Button } from '@mui/material';
-import { sxClearCompleted, sxDivDownPanel, sxDownPanelFilterButton, sxDownPanelButtonRow } from './sxDownPanel.js';
+import { sxClearCompleted, sxDivDownPanel, sxDownPanelFilterButton, sxDownPanelButtonRow } from './style.js';
 
 export default function DownPanel() {
   const { todos, flag } = useSelector(state => state.stackTodos);

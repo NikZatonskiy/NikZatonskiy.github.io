@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { appendNewValueForCreate, addTodo } from "../../store/slice/stackTodosSlice";
-import { sxTodoFormInput } from "./sxTodo";
+import { sxTodoFormInput } from "./style";
 import { Box, TextField } from '@mui/material';
 
 export default function TodoForm() {

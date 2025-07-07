@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { updateTodoStatus, removeTodo, setSelectedTodo } from "../../store/slice/stackTodosSlice";
 import { Box, Button, Checkbox, ListItem, InputLabel } from '@mui/material';
-import { sxCustomCheckbox, sxCustomCheckmark, sxDeleteButton, sxListDiv, sxSpan, sxTodoInputLabel, sxTodoListItem } from "./sxTodo";
+import { sxCustomCheckbox, sxCustomCheckmark, sxDeleteButton, sxListDiv, sxSpan, sxTodoInputLabel, sxTodoListItem } from "./style";
 
 export default function TodoElement({ elementTodo }) {
   const dispatch = useDispatch();

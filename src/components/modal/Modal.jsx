@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { updateTodo, appendNewValueForUpdate, clearSelectedTodo } from '../../store/slice/stackTodosSlice.jsx'
 import { Box } from '@mui/material';
-import { sxModalBackground, sxModalWindow, sxTextarea } from "./sxModal.js";
+import { sxModalBackground, sxModalWindow, sxTextarea } from "./style.js";
 
 export default function Modal() {
   const selectedTodo = useSelector(state => state.stackTodos.selectedTodo);
